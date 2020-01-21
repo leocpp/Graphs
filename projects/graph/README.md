@@ -1,16 +1,11 @@
-# Drawing Connected Components
+# Searching and Generating Graphs
 
-This is a multi-stage project to draw a graph and show the connected
-components of that graph in different colors.
+This is a multi-stage project to implement a basic graph class and traversals.
 
-A designer on your team has provided a mockup for what the final product should look like:  https://github.com/LambdaSchool/Graphs/blob/master/projects/graph/UI:UX%20Mockup.png
 
-Note that it should not always appear exactly like this.  The vertexes, edges, and colors should vary randomly each time the program is run.  
+## Part 1: Graph Class
 
-## Part 1: Graph, Vertex, Edge Classes
-
-In the file `graph.py`, implement a `Graph` class that supports the API expected
-by `draw.py`. In particular, this means there should be a field `vertices` that
+In the file `graph.py`, implement a `Graph` class that supports the API in the example below. In particular, this means there should be a field `vertices` that
 contains a dictionary mapping vertex labels to edges. For example:
 
 ```python
@@ -22,7 +17,7 @@ contains a dictionary mapping vertex labels to edges. For example:
 }
 ```
 
-This represents a graph with three vertices and two total (bidirectional) edges.
+This represents a graph with four vertices and two total (bidirectional) edges.
 The vertex `'2'` has no edges, while `'0'` is connected to both `'1'` and `'3'`.
 
 You should also create `add_vertex` and `add_edge` methods that add the
@@ -48,101 +43,29 @@ to your graph to ensure that edges to nonexistent vertices are rejected.
 graph.add_edge('0', '4')  # No '4' vertex, should raise an Exception!
 ```
 
+## Part 2: Implement Breadth-First Traversal
 
-## Phase 2: Drawing with Bokeh
+Write a function within your Graph class that takes takes a starting node as an argument, then performs BFT. Your function should print the resulting nodes in the order they were visited. Note that there are multiple valid paths that may be printed.
 
-In `draw.py`, implement the `BokehGraph` class. The constructor should accept a
-`Graph` object (as you implemented in part 1), and optionally other parameters
-configuring e.g. graphical settings. The `show` method should use Bokeh to
-generate and display HTML that draws the graph - the included `Pipfile` will
-install Bokeh and necessarily dependencies.
+## Part 3: Implement Depth-First Traversal with a Stack
 
-This is purposefully open-ended, so feel free to get creative. But also, ask
-questions to avoid being blocked, and generally discuss and work from lecture
-examples.
+Write a function within your Graph class that takes takes a starting node as an argument, then performs DFT. Your function should print the resulting nodes in the order they were visited. Note that there are multiple valid paths that may be printed.
 
-Helpful resources:
-- https://bokeh.pydata.org/en/latest/
-- https://bokeh.pydata.org/en/latest/docs/user_guide/graph.html
+## Part 4: Implement Depth-First Traversal using Recursion
 
-To test your implementation, try drawing your graph from part 1, and share your
-result with the class!
+Write a function within your Graph class that takes takes a starting node as an argument, then performs DFT using recursion. Your function should print the resulting nodes in the order they were visited. Note that there are multiple valid paths that may be printed.
 
+## Part 5: Implement Breadth-First Search
 
-# Below are JS goals - they will be translated to Python shortly
+Write a function within your Graph class that takes takes a starting node and a destination node as an argument, then performs BFS. Your function should return the shortest path from the start node to the destination node. Note that there are multiple valid paths.
 
-## Phase 3: Draw a Random Graph
+## Part 6: Implement Depth-First Search
 
-Modify the `GraphView` code to draw the graph itself.
-
-For this, we'll use the `randomize()` code provided in `graph.js`. This
-function sets up a grid of randomly jittered verts with random edges
-between them. It also computes X and Y pixel values you can use to
-determine where to draw things on the canvas.
-
-```javascript
-const g = new Graph();
-
-// Create a graph with 20 nodes in a grid (5*4), with a 150x150px jitter
-// box for each of them. The canvas size should be 750x600 to hold this
-// graph (5*150=750, 4*150=600). The probability of any edge of the grid
-// existing is 0.6.
-
-g.randomize(5, 4, 150, 0.6);
-```
-
-The _x_ and _y_ pixel coordinates of the verts will be in the `.pos.x`
-and `.pos.y` properties of the vert after `randomize()` has been called.
-
-Once you have the graph, drawing it is a matter of iterating all the
-verts and their edge destinations to draw the lines. 
-
-After the lines are drawn, draw circles for each vert.
-
-Finally, there is a `value` property on each vert that you can draw as
-text on top of the vert circle.
+Write a function within your Graph class that takes takes a starting node and a destination node as an argument, then performs DFS. Your function should return a valid path (not necessarily the shortest) from the start node to the destination node. Note that there are multiple valid paths.
 
 
-## Phase 4: Implement Breadth-First Search (or Depth-First Search)
+## Part 7: Implement Depth-First Search using Recursion
 
-This is a necessary step in figuring out the connected components.
-
-## Phase 5: Color the Connected Components Differently
-
-It's likely the random graphs have multiple connected components. Choose
-a random color for the edges of connected component.
-
-## Phase 6: Add a UI Button to Generate a new Graph
-
-Instead of hitting reload, it would be nice to have a button that you
-could press to generate a new random graph and show the connected
-components.
-
-## Stretch 1:
-
-Add random edge weights, integers from 1-10. Draw the weight near the center of the edge.
-
-> Hint: the center of a line is at point _x_,_y_, where _x_ is the average of
-> the x coordinates of the endpoints of the line, and _y_ is the average of the
-> y coordinates of the endpoints of the line.
-
-Even though there are two edges between each connected vertex on the graph,
-there should only be one label (since the edges are effectively a single,
-non-directed edge.)
+Write a function within your Graph class that takes takes a starting node and a destination node as an argument, then performs DFS using recursion. Your function should return a valid path (not necessarily the shortest) from the start node to the destination node. Note that there are multiple valid paths.
 
 
-## Stretch 2:
-
-Figure out which vertex a user is clicking on when they click with a mouse.
-`console.log` the vertex value when they do to test.
-
-Allow the user to select two verts: starting and ending.
-
-
-## Stretch 3:
-
-Implement [Dijkstra's
-Algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) to find the
-shortest route between starting and ending points from Stretch 2.
-
-Highlight the route.
